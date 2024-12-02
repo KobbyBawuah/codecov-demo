@@ -14,35 +14,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Check out the code
-    - name: Checkout code
-      uses: actions/checkout@v3
+      # Step 1: Check out the code
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    # Step 2: Set up Python environment
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
+      # Step 2: Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
 
-    # Step 3: Install dependencies
-    - name: Install dependencies
-      run: |
-        python -m venv venv
-        source venv/bin/activate
-        pip install -r requirements.txt
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          ./venv/bin/python -m pip install --upgrade pip
+          ./venv/bin/python -m pip install -r requirements.txt
 
-    # Step 4: Run tests with coverage
-    - name: Run tests
-      run: |
-        source venv/bin/activate
-        pytest --cov=calculator --cov-report=xml
+      # Step 4: Run tests with coverage
+      - name: Run tests
+        run: |
+          ./venv/bin/python -m pytest --cov=calculator --cov-report=xml
 
-    # Step 5: Upload coverage to Codecov
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v4
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        files: ./coverage.xml
-        flags: unittests
-        name: codecov-demo
-
+      # Step 5: Upload coverage to Codecov
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.xml
+          flags: unittests
+          name: codecov-demo
