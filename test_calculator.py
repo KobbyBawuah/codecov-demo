@@ -16,5 +16,15 @@ class TestCalculator(unittest.TestCase):
         with self.assertRaises(ValueError):
             Calculator.divide(10, 0)
 
+    def test_power(self):
+        self.assertEqual(Calculator.power(2, 3), 8)
+
+    # Intentionally skipping tests for `modulo` and `factorial`.
+
+    def test_square_root(self):
+        self.assertEqual(Calculator.square_root(16), 4)
+        with self.assertRaises(ValueError):
+            Calculator.square_root(-4)
+
 if __name__ == '__main__':
     unittest.main()
